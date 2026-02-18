@@ -1,1 +1,1 @@
-# gemini-playgrounf
+# gemini-playground
