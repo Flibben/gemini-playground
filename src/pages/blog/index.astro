@@ -1,0 +1,65 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+// This magic command grabs all markdown files in this folder
+const allPosts = await Astro.glob('./*.md');
+---
+
+<MainLayout title="Blog">
+  <section class="blog-index">
+    <h1>Latest Stories</h1>
+    <p class="subtitle">Tips, gears, and stories from the trail.</p>
+
+    <div class="grid">
+      {allPosts.map((post) => (
+        <a href={post.url} class="card">
+          <span class="tag">{post.frontmatter.category}</span>
+          <h2>{post.frontmatter.title}</h2>
+          <p>{post.frontmatter.description}</p>
+          <span class="read-more">Read Article &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .blog-index { max-width: 800px; margin: 0 auto; }
+  
+  h1 { text-align: center; margin-bottom: 0.5rem; }
+  .subtitle { text-align: center; color: #64748b; margin-bottom: 3rem; }
+
+  .grid { display: grid; gap: 2rem; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+  }
+
+  .card h2 { margin: 0.5rem 0; color: var(--secondary); }
+  
+  .tag { 
+    color: var(--primary); 
+    font-weight: bold; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+  }
+
+  .read-more {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>
