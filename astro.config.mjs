@@ -1,5 +1,9 @@
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // Replace with your actual GitHub URL
+  site: 'https://flibben.github.io',
+  // Replace with your actual repository name
+  base: '/gemini-playground',
+});
