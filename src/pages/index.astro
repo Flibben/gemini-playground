@@ -1,0 +1,46 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Home">
+  <section class="hero">
+    <h1>Run Your Best.</h1>
+    <p>Training plans, gear reviews, and motivation for the modern runner.</p>
+    <a href="/blog" class="button">Read the Blog</a>
+  </section>
+</MainLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  h1 {
+    font-size: 3rem; /* Per your H1 spec */
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem; /* Rounded-lg */
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+
+  .button:hover {
+    background-color: var(--primary-hover);
+  }
+</style>
