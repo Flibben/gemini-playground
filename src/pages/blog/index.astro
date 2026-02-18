@@ -1,7 +1,14 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-// This magic command grabs all markdown files in this folder
-const allPosts = await Astro.glob('./*.md');
+
+// 1. Use import.meta.glob. 
+// { eager: true } tells it to load the data immediately (like Astro.glob did)
+const postFiles = import.meta.glob('./*.md', { eager: true });
+
+// 2. Convert the object into an array and sort by date (newest first)
+const allPosts = Object.values(postFiles).sort((a, b) => {
+  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
 ---
 
 <MainLayout title="Blog">
