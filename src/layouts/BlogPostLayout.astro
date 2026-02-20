@@ -1,7 +1,13 @@
----
 import MainLayout from './MainLayout.astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 const { frontmatter } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif}');
+const heroPath = frontmatter.heroImage.replace('../../', '/src/');
+
+if (!images[heroPath]) throw new Error(`"${heroPath}" does not exist in "src/assets/images/"`);
 ---
 
 <MainLayout title={frontmatter.title}>
@@ -13,7 +19,7 @@ const { frontmatter } = Astro.props;
       
       {frontmatter.heroImage && (
         <Image 
-          src={frontmatter.heroImage} 
+          src={images[heroPath]()} 
           alt={frontmatter.heroAlt || ""} 
           width={800} 
           height={450}
@@ -40,10 +46,11 @@ const { frontmatter } = Astro.props;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
 
-  h1 { font-size: 2.5rem; color: var(--secondary); margin: 1rem 0; }
+  h1 { font-size: 3rem; color: var(--secondary); margin: 1rem 0; }
   .tag { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: bold; }
   .meta { color: #64748b; font-size: 0.9rem; }
 
   .content { font-size: 1.125rem; line-height: 1.8; color: var(--text); }
   .content :global(img) { width: 100%; border-radius: 0.5rem; margin: 2rem 0; }
+  .content :global(h2) { margin-top: 2.5rem; color: var(--secondary); }
 </style>
