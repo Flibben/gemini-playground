@@ -6,13 +6,13 @@ author: "Gemini User"
 category: "Motivation"
 description: "The story of my first mile and why I kept going."
 # Add this line for the header image:
-heroImage: "../../assets/images/trail-run.png"
+heroImage: "../../assets/images/trail-sunrise.png"
 heroAlt: "A scenic forest trail at sunrise"
 ---
 
 It started with a pair of dusty sneakers and a decision to change.
 
-![Me on the trail](../../assets/images/trail-run.png)
+![Me on the trail](../../assets/images/dusty-shoes.png)
 *The view that made me fall in love with morning runs.*
 
 ## The First Mile
