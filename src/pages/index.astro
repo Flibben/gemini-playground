@@ -1,46 +1,89 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+
+// 1. Fetch posts and sort by date
+const postFiles = import.meta.glob('./blog/*.md', { eager: true });
+const latestPosts = Object.values(postFiles)
+  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+  .slice(0, 3); // Only show the 3 most recent
 ---
 
 <MainLayout title="Home">
   <section class="hero">
     <h1>Run Your Best.</h1>
     <p>Training plans, gear reviews, and motivation for the modern runner.</p>
-    <a href="/blog" class="button">Read the Blog</a>
+    <a href={import.meta.env.BASE_URL + "blog"} class="button">Browse All Stories</a>
+  </section>
+
+  <section class="latest-news">
+    <h2>Latest from the Trail</h2>
+    <div class="post-grid">
+      {latestPosts.map((post) => (
+        <a href={post.url} class="post-card">
+          <div class="post-content">
+            <span class="tag">{post.frontmatter.category}</span>
+            <h3>{post.frontmatter.title}</h3>
+            <p>{post.frontmatter.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
   </section>
 </MainLayout>
 
 <style>
   .hero {
     text-align: center;
-    padding: 4rem 0;
+    padding: 6rem 0;
+    background: linear-gradient(to bottom, #ffffff, var(--bg));
+    border-radius: 2rem;
+    margin-bottom: 4rem;
   }
 
-  h1 {
-    font-size: 3rem; /* Per your H1 spec */
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+  h1 { font-size: 3.5rem; margin-bottom: 1rem; color: var(--secondary); }
+  
   .button {
     display: inline-block;
-    background-color: var(--primary);
+    background: var(--primary);
     color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 0.5rem; /* Rounded-lg */
+    padding: 1rem 2.5rem;
+    border-radius: 0.5rem;
     text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    transition: transform 0.2s;
+  }
+  .button:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* Latest Posts Grid */
+  .latest-news { padding: 4rem 0; }
+  .latest-news h2 { margin-bottom: 2.5rem; text-align: center; }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
   }
 
-  .button:hover {
-    background-color: var(--primary-hover);
+  .post-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: block;
+    overflow: hidden;
   }
+
+  .post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+  }
+
+  .post-content { padding: 1.5rem; }
+  .tag { color: var(--primary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+  h3 { margin: 0.5rem 0; font-size: 1.25rem; }
+  p { font-size: 0.95rem; color: var(--text); }
 </style>
